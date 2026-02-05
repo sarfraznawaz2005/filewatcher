@@ -19,7 +19,6 @@ A real-time file monitoring application built with AutoHotkey v2.0+. This tool a
 
 1. Download the `FileWatcher.ahk` script and all associated `.ahk` files (`FileWatcherLogic.ahk`, `ContextMenu.ahk`, `Logger.ahk`)
 2. Double-click `FileWatcher.ahk` to run the application
-3. Alternatively, compile it to an executable using AutoHotkey's compiler
 
 ## Usage
 
@@ -42,12 +41,6 @@ You can launch the application with a file path directly:
 
 ```
 FileWatcher.ahk "C:\path\to\your\file.txt"
-```
-
-Or if compiled to an executable:
-
-```
-FileWatcher.exe "C:\path\to\your\file.txt"
 ```
 
 ## Interface
