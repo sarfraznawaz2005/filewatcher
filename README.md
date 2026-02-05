@@ -31,7 +31,7 @@ A real-time file monitoring application built with AutoHotkey v2.0+. This tool a
 
 ### Context Menu Integration
 
-- Click **"✍️ Register Context Menu"** to add "Open with File Watcher" to your Windows context menu
+- Click **"✍️ Register Context Menu"** to add "Watch with File Watcher" to your Windows context menu
 - This allows you to right-click any file and open it directly in the File Watcher
 - Use **"🗑️ Unregister Context Menu"** to remove the context menu entry
 

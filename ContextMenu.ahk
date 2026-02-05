@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0+
 
 global CONTEXT_MENU_KEY := "Software\Classes\*\shell\FileWatcher"
-global CONTEXT_MENU_NAME := "Open with File Watcher"
+global CONTEXT_MENU_NAME := "Watch with File Watcher"
 
 IsContextMenuRegistered() {
     try {
