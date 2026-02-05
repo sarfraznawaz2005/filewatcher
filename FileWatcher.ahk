@@ -26,7 +26,7 @@ BtnAction.OnEvent("Click", ToggleWatchAction)
 
 ; Context Menu Button (Far Right)
 ctxLabel := IsContextMenuRegistered() ? "🗑️ Unregister Context Menu" : "✍️ Register Context Menu"
-BtnCtx := MainGui.Add("Button", "yp w210 vBtnCtx", ctxLabel) ; Increased width for icon and text
+BtnCtx := MainGui.Add("Button", "yp w150 vBtnCtx", ctxLabel) ; Increased width for icon and text
 BtnCtx.OnEvent("Click", OnContextMenuClick)
 
 ; File Path Label
