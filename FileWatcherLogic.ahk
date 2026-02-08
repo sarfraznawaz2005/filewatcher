@@ -71,6 +71,7 @@ HandleCommandLineArgs() {
             
             MainGui["LblPath"].Value := "Watching: " . G_WatchedFile
             MainGui["BtnAction"].Enabled := true
+            MainGui["BtnClear"].Enabled := true
             
             try MainGui["EditContent"].Value := FileRead(G_WatchedFile)
             

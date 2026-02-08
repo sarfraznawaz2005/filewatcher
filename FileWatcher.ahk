@@ -24,6 +24,9 @@ BtnWatch.OnEvent("Click", SelectFile)
 global BtnAction := MainGui.Add("Button", "x+10 vBtnAction Disabled", "▶️ Start Watching")
 BtnAction.OnEvent("Click", ToggleWatchAction)
 
+global BtnClear := MainGui.Add("Button", "x+10 vBtnClear Disabled", "🧹 Clear File")
+BtnClear.OnEvent("Click", ClearFileContents)
+
 ; Context Menu Button (Far Right)
 ctxLabel := IsContextMenuRegistered() ? "🗑️ Unregister Context Menu" : "✍️ Register Context Menu"
 BtnCtx := MainGui.Add("Button", "yp w150 vBtnCtx", ctxLabel) ; Increased width for icon and text
@@ -92,6 +95,7 @@ SelectFile(*) {
     
     MainGui["LblPath"].Value := "Watching: " . G_WatchedFile
     MainGui["BtnAction"].Enabled := true
+    MainGui["BtnClear"].Enabled := true
     
     ; Load initial content
     try {
@@ -113,4 +117,20 @@ OnContextMenuClick(thisBtn, *) {
     MainGui.GetClientPos(,, &gw)
     thisBtn.GetPos(, &by, &bw)
     thisBtn.Move(gw - MainGui.MarginX - bw, by)
+}
+
+ClearFileContents(*) {
+    global G_WatchedFile, MainGui
+    if (G_WatchedFile = "")
+        return
+        
+    try {
+        FileObj := FileOpen(G_WatchedFile, "w")
+        FileObj.Write("")
+        FileObj.Close()
+        MainGui["EditContent"].Value := ""
+        LogDebug("File cleared: " . G_WatchedFile)
+    } catch as e {
+        LogDebug("Error clearing file: " . e.Message)
+    }
 }
