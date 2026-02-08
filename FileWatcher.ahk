@@ -1,5 +1,6 @@
 #Requires AutoHotkey v2.0+
 #SingleInstance Force
+#NoTrayIcon
 #Warn
 
 #Include Logger.ahk
@@ -8,7 +9,7 @@
 
 ; ---------- Initialization ----------
 InitLogs()
-TraySetIcon("shell32.dll", 23) ; Magnifying glass icon
+TraySetIcon("shell32.dll", 23) ; Magnifying glass icon for Taskbar
 
 ; ---------- GUI Setup ----------
 global MainGui := Gui("+Resize +MinSize400x300", "File Watcher")
