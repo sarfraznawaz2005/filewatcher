@@ -83,7 +83,7 @@ Gui_Size(thisGui, minMax, width, height) {
 }
 
 SelectFile(*) {
-    global G_WatchedFile, G_LastModified
+    global G_WatchedFile, G_LastModified, G_LineCount
     
     selectedFile := FileSelect(3,, "Select a file to watch", "All Files (*.*)")
     if (selectedFile = "") {
@@ -94,16 +94,19 @@ SelectFile(*) {
     G_WatchedFile := selectedFile
     G_LastModified := "" ; Reset to force reload
     
-    MainGui["LblPath"].Value := "Watching: " . G_WatchedFile
     MainGui["BtnAction"].Enabled := true
     MainGui["BtnClear"].Enabled := true
-    
+
     ; Load initial content
     try {
-        MainGui["EditContent"].Value := FileRead(G_WatchedFile)
+        content := FileRead(G_WatchedFile)
+        MainGui["EditContent"].Value := content
+        G_LineCount := CountLines(content)
     } catch {
         MainGui["EditContent"].Value := ""
+        G_LineCount := 0
     }
+    UpdatePathLabel("Watching")
     
     LogDebug("Selected file: " . G_WatchedFile)
     StartWatching() ; Auto-start watching
@@ -121,15 +124,17 @@ OnContextMenuClick(thisBtn, *) {
 }
 
 ClearFileContents(*) {
-    global G_WatchedFile, MainGui
+    global G_WatchedFile, G_LineCount, G_TimerRunning, MainGui
     if (G_WatchedFile = "")
         return
-        
+
     try {
         FileObj := FileOpen(G_WatchedFile, "w")
         FileObj.Write("")
         FileObj.Close()
         MainGui["EditContent"].Value := ""
+        G_LineCount := 0
+        UpdatePathLabel(G_TimerRunning ? "Watching" : "Stopped watching")
         LogDebug("File cleared: " . G_WatchedFile)
     } catch as e {
         LogDebug("Error clearing file: " . e.Message)
