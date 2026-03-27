@@ -58,6 +58,8 @@ StartWatching() {
         LogDebug("Watcher timer started.")
     }
     MainGui["BtnAction"].Text := "🛑 Stop Watching"
+    MainGui["BtnClear"].Enabled := true
+    MainGui["BtnCopy"].Enabled := true
     MainGui["LblPath"].SetFont("Bold") ; Removed green color
     WatchTick()
 }
@@ -71,6 +73,8 @@ ToggleWatchAction(*) {
         LogDebug("Watcher timer stopped.")
         
         MainGui["BtnAction"].Text := "▶️ Start Watching"
+        MainGui["BtnClear"].Enabled := false
+        MainGui["BtnCopy"].Enabled := false
         UpdatePathLabel("Stopped watching")
         MainGui["LblPath"].SetFont()
     } else { ; We are stopped, so start
@@ -89,6 +93,7 @@ HandleCommandLineArgs() {
             
             MainGui["BtnAction"].Enabled := true
             MainGui["BtnClear"].Enabled := true
+            MainGui["BtnCopy"].Enabled := true
 
             try {
                 content := FileRead(G_WatchedFile)

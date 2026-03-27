@@ -19,7 +19,7 @@ MainGui.OnEvent("Size", Gui_Size)
 MainGui.OnEvent("Close", (*) => ExitApp())
 
 ; Buttons Row
-BtnWatch := MainGui.Add("Button", "vBtnWatch", "👁️ Open File")
+global BtnWatch := MainGui.Add("Button", "vBtnWatch", "👁️ Open File")
 BtnWatch.OnEvent("Click", SelectFile)
 
 global BtnAction := MainGui.Add("Button", "x+10 vBtnAction Disabled", "▶️ Start Watching")
@@ -27,6 +27,9 @@ BtnAction.OnEvent("Click", ToggleWatchAction)
 
 global BtnClear := MainGui.Add("Button", "x+10 vBtnClear Disabled", "🧹 Clear File")
 BtnClear.OnEvent("Click", ClearFileContents)
+
+global BtnCopy := MainGui.Add("Button", "x+10 vBtnCopy Disabled", "📋 Copy Contents")
+BtnCopy.OnEvent("Click", CopyFileContents)
 
 ; Context Menu Button (Far Right)
 ctxLabel := IsContextMenuRegistered() ? "🗑️ Unregister Context Menu" : "✍️ Register Context Menu"
@@ -96,6 +99,7 @@ SelectFile(*) {
     
     MainGui["BtnAction"].Enabled := true
     MainGui["BtnClear"].Enabled := true
+    MainGui["BtnCopy"].Enabled := true
 
     ; Load initial content
     try {
@@ -139,4 +143,25 @@ ClearFileContents(*) {
     } catch as e {
         LogDebug("Error clearing file: " . e.Message)
     }
+}
+
+CopyFileContents(*) {
+    global G_WatchedFile
+    
+    if (G_WatchedFile = "")
+        return
+
+    try {
+        content := FileRead(G_WatchedFile)
+    } catch {
+        content := ""
+    }
+    
+    if (content = "") {
+        LogDebug("No content to copy")
+        return
+    }
+    
+    A_Clipboard := content
+    LogDebug("File contents copied to clipboard: " . G_WatchedFile)
 }
